@@ -1,0 +1,20 @@
+{
+	"name": "pigeon-shooter",
+	"version": "1.0.0",
+	"private": true,
+	"description": "Simple browser game: click to shoot pigeons. Runs on localhost.",
+	"main": "server.js",
+	"scripts": {
+		"start": "node server.js"
+	},
+	"keywords": [
+		"game",
+		"canvas",
+		"shooting",
+		"localhost"
+	],
+	"author": "",
+	"license": "MIT"
+}
+
+

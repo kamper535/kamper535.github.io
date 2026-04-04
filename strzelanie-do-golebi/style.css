@@ -1,0 +1,251 @@
+:root {
+	--bg: #0f1220;
+	--bg-2: #14182a;
+	--panel: #1f2542;
+	--text: #e8ecff;
+	--accent: #5be7c4;
+	--accent-2: #7aa2ff;
+	--danger: #ff6b6b;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+html, body {
+	height: 100%;
+}
+
+body {
+	margin: 0;
+	background: radial-gradient(1200px 800px at 30% 10%, var(--bg-2), var(--bg));
+	color: var(--text);
+	font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+	overflow: hidden;
+}
+
+.hud {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	display: grid;
+	grid-template-columns: 1fr auto 1fr;
+	align-items: center;
+	gap: 12px;
+	padding: 12px 16px;
+	background: linear-gradient(180deg, rgba(15,18,32,0.85) 0%, rgba(15,18,32,0.35) 100%);
+	backdrop-filter: blur(6px);
+	z-index: 10;
+}
+
+.hud__left, .hud__right {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	font-size: 14px;
+	opacity: 0.9;
+}
+
+.hud__center {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+}
+
+.timer {
+	font-weight: 700;
+	font-variant-numeric: tabular-nums;
+.level-label {
+	position: fixed;
+	top: 10px;
+	right: 12px;
+	z-index: 11; /* above HUD (10) */
+	font-weight: 800;
+	color: #ff3b3b; /* red */
+	padding: 4px 8px;
+	border-radius: 8px;
+	background: rgba(255, 59, 59, 0.08);
+	border: 1px solid rgba(255, 59, 59, 0.35);
+	text-shadow: 0 1px 2px rgba(0,0,0,0.15);
+}
+
+	padding: 6px 10px;
+	border-radius: 10px;
+	background: rgba(122,162,255,0.12);
+	border: 1px solid rgba(122,162,255,0.3);
+}
+
+.timer.timer--warning {
+	background: rgba(255, 107, 107, 0.18);
+	border-color: rgba(255, 107, 107, 0.6);
+	color: #ffcccc;
+	box-shadow: 0 0 0 0 rgba(255,107,107,0.35);
+	animation: timerPulse 800ms ease-in-out infinite;
+}
+
+@keyframes timerPulse {
+	0% { box-shadow: 0 0 0 0 rgba(255,107,107,0.35); }
+	70% { box-shadow: 0 0 0 10px rgba(255,107,107,0); }
+	100% { box-shadow: 0 0 0 0 rgba(255,107,107,0); }
+}
+
+.btn {
+	border: 0;
+	background: linear-gradient(180deg, var(--accent), var(--accent-2));
+	color: #0b0e1a;
+	font-weight: 700;
+	padding: 8px 14px;
+	border-radius: 10px;
+	cursor: pointer;
+	box-shadow: 0 6px 20px rgba(122,162,255,0.35);
+	transition: transform 0.05s ease, filter 0.15s ease;
+}
+.btn:hover { filter: brightness(1.05); }
+.btn:active { transform: translateY(1px) scale(0.99); }
+.btn:disabled { opacity: 0.6; cursor: not-allowed; }
+.btn--ghost {
+	background: transparent;
+	color: var(--text);
+	border: 1px solid rgba(122,162,255,0.4);
+	box-shadow: none;
+}
+.btn--lg { padding: 12px 18px; font-size: 16px; }
+
+#game {
+	position: absolute;
+	inset: 0;
+	width: 100vw;
+	height: 100vh;
+	display: block;
+	outline: none;
+	cursor: none; /* hide OS cursor; we render a crosshair on canvas */
+}
+
+.overlay {
+	position: absolute;
+	inset: 0;
+	display: grid;
+	place-items: center;
+	background: radial-gradient(1000px 700px at 50% 30%, rgba(31,37,66,0.85), rgba(15,18,32,0.85));
+	z-index: 20;
+}
+.overlay.hidden { display: none; }
+
+.card {
+	background: rgba(10,12,24,0.6);
+	border: 1px solid rgba(122,162,255,0.25);
+	border-radius: 16px;
+	padding: 24px;
+	width: min(520px, 92vw);
+	box-shadow: 0 20px 60px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.04);
+}
+.card h1 {
+	margin: 0 0 8px;
+	font-size: 28px;
+	letter-spacing: 0.3px;
+}
+.card p {
+	margin: 0 0 10px;
+	opacity: 0.9;
+}
+.card ul {
+	margin: 0 0 16px 18px;
+	padding: 0;
+	opacity: 0.9;
+}
+
+.final-score {
+	font-size: 28px;
+	font-weight: 800;
+	letter-spacing: 0.3px;
+	color: var(--accent);
+	text-shadow: 0 2px 12px rgba(91,231,196,0.25);
+}
+
+.weapon-icon {
+	position: fixed;
+	bottom: 12px;
+	right: 12px;
+	width: 64px;
+	height: 32px;
+	padding: 6px;
+	border-radius: 10px;
+	background: rgba(0,0,0,0.25);
+	border: 1px solid rgba(255,255,255,0.2);
+	backdrop-filter: blur(4px);
+	z-index: 12;
+}
+.weapon-icon svg {
+	width: 100%;
+	height: 100%;
+	display: block;
+	filter: drop-shadow(0 2px 6px rgba(0,0,0,0.35));
+}
+
+.ammo-display {
+	position: fixed;
+	bottom: 12px;
+	right: 88px; /* obok ikony broni */
+	z-index: 12;
+	padding: 8px 12px;
+	border-radius: 10px;
+	background: rgba(0,0,0,0.35);
+	border: 1px solid rgba(255,255,255,0.25);
+	backdrop-filter: blur(4px);
+	font-weight: 700;
+	font-size: 16px;
+	color: #fff;
+	text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+	min-width: 60px;
+	text-align: center;
+}
+.ammo-display span {
+	display: block;
+}
+
+.leaderboard {
+	margin-top: 8px;
+	padding-top: 8px;
+	border-top: 1px solid rgba(122,162,255,0.2);
+}
+.leaderboard h2 {
+	margin: 8px 0 8px;
+	font-size: 18px;
+	font-weight: 800;
+	letter-spacing: 0.3px;
+}
+.leaderboard ol {
+	margin: 0;
+	padding-left: 22px;
+}
+.leaderboard li {
+	margin: 2px 0;
+}
+
+.flash {
+	position: absolute;
+	inset: 0;
+	background: radial-gradient(400px 300px at var(--x) var(--y), rgba(255,255,255,0.15), transparent 60%);
+	pointer-events: none;
+	animation: flash 200ms ease-out;
+}
+@keyframes flash {
+	from { opacity: 1; }
+	to   { opacity: 0; }
+}
+
+.crosshair {
+	position: absolute;
+	width: 18px;
+	height: 18px;
+	border-radius: 50%;
+	border: 2px solid rgba(255,255,255,0.8);
+	pointer-events: none;
+	transform: translate(-50%, -50%);
+	filter: drop-shadow(0 0 6px rgba(122,162,255,0.6));
+	z-index: 15;
+}
+
+
