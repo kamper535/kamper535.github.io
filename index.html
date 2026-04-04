@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="pl">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>kamper535 – Moje gry</title>
+		<style>
+			*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+			body {
+				font-family: 'Segoe UI', system-ui, sans-serif;
+				background: #0d1117;
+				color: #e6edf3;
+				min-height: 100vh;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				padding: 48px 16px;
+			}
+
+			header {
+				text-align: center;
+				margin-bottom: 48px;
+			}
+
+			header h1 {
+				font-size: 2.4rem;
+				font-weight: 700;
+				letter-spacing: -0.5px;
+			}
+
+			header p {
+				margin-top: 8px;
+				color: #8b949e;
+				font-size: 1.05rem;
+			}
+
+			.games {
+				display: grid;
+				grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+				gap: 24px;
+				width: 100%;
+				max-width: 900px;
+			}
+
+			.card {
+				background: #161b22;
+				border: 1px solid #30363d;
+				border-radius: 12px;
+				padding: 28px 24px;
+				display: flex;
+				flex-direction: column;
+				gap: 12px;
+				transition: border-color 0.2s, transform 0.2s;
+			}
+
+			.card:hover {
+				border-color: #58a6ff;
+				transform: translateY(-3px);
+			}
+
+			.card__emoji {
+				font-size: 2.5rem;
+				line-height: 1;
+			}
+
+			.card__title {
+				font-size: 1.25rem;
+				font-weight: 600;
+			}
+
+			.card__desc {
+				color: #8b949e;
+				font-size: 0.95rem;
+				line-height: 1.5;
+				flex: 1;
+			}
+
+			.card__link {
+				display: inline-block;
+				margin-top: 8px;
+				padding: 8px 20px;
+				background: #238636;
+				color: #fff;
+				text-decoration: none;
+				border-radius: 6px;
+				font-weight: 600;
+				font-size: 0.95rem;
+				text-align: center;
+				transition: background 0.2s;
+			}
+
+			.card__link:hover { background: #2ea043; }
+
+			footer {
+				margin-top: 64px;
+				color: #484f58;
+				font-size: 0.85rem;
+			}
+		</style>
+	</head>
+	<body>
+		<header>
+			<h1>kamper535</h1>
+			<p>Moje gry przeglądarkowe</p>
+		</header>
+
+		<main class="games">
+			<div class="card">
+				<div class="card__emoji">🐦</div>
+				<div class="card__title">Strzelanie do gołębi</div>
+				<div class="card__desc">
+					Klikaj w przelatujące gołębie i zdobywaj punkty. Wybierz broń, uważaj na pudła
+					i przeżyj 60 sekund!
+				</div>
+				<a class="card__link" href="strzelanie-do-golebi/">Zagraj</a>
+			</div>
+		</main>
+
+		<footer>
+			<p>&copy; 2025 kamper535</p>
+		</footer>
+	</body>
+</html>
