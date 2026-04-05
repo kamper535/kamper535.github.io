@@ -19,23 +19,12 @@
 
 		header {
 			text-align: center;
-			padding: 16px;
+			padding: 14px;
 			background: rgba(0,0,0,0.25);
 			width: 100%;
 		}
-
-		header h1 {
-			font-size: 1.8rem;
-			font-weight: 700;
-			color: #fff;
-			text-shadow: 1px 2px 4px rgba(0,0,0,0.4);
-		}
-
-		header a {
-			color: #cdeaff;
-			font-size: 0.85rem;
-			text-decoration: none;
-		}
+		header h1 { font-size: 1.8rem; font-weight: 700; color: #fff; text-shadow: 1px 2px 4px rgba(0,0,0,0.4); }
+		header a { color: #cdeaff; font-size: 0.85rem; text-decoration: none; }
 		header a:hover { text-decoration: underline; }
 
 		.game-area {
@@ -44,84 +33,93 @@
 			align-items: center;
 			flex: 1;
 			width: 100%;
-			padding: 20px 16px 30px;
-			gap: 20px;
+			padding: 16px 16px 28px;
+			gap: 14px;
 		}
 
-		/* ── palette ── */
 		.palette {
 			display: flex;
-			gap: 12px;
+			gap: 10px;
 			flex-wrap: wrap;
 			justify-content: center;
-			background: rgba(255,255,255,0.55);
+			background: rgba(255,255,255,0.6);
 			backdrop-filter: blur(6px);
 			border-radius: 14px;
-			padding: 12px 18px;
+			padding: 10px 16px;
 			box-shadow: 0 4px 16px rgba(0,0,0,0.15);
 		}
-
 		.color-btn {
-			width: 48px;
-			height: 48px;
+			width: 44px; height: 44px;
 			border-radius: 50%;
 			border: 4px solid transparent;
 			cursor: pointer;
 			transition: transform 0.15s, border-color 0.15s;
 			position: relative;
 		}
-
-		.color-btn:hover { transform: scale(1.15); }
-
+		.color-btn:hover { transform: scale(1.12); }
 		.color-btn.active {
 			border-color: #222;
-			transform: scale(1.2);
-			box-shadow: 0 0 0 3px rgba(0,0,0,0.25);
+			transform: scale(1.18);
+			box-shadow: 0 0 0 3px rgba(0,0,0,0.2);
 		}
-
-		/* bucket icon on selected */
 		.color-btn.active::after {
-			content: '🪣';
+			content: '🖌️';
 			position: absolute;
-			font-size: 14px;
-			bottom: -4px;
-			right: -4px;
+			font-size: 13px;
+			bottom: -4px; right: -4px;
 		}
 
-		/* ── house SVG wrapper ── */
-		.house-wrap {
+		#house-label {
+			font-size: 0.9rem;
+			font-weight: 600;
+			color: rgba(0,0,0,0.55);
+			background: rgba(255,255,255,0.5);
+			border-radius: 8px;
+			padding: 4px 14px;
+		}
+
+		.canvas-wrap {
 			position: relative;
+			width: min(520px, 94vw);
+			border-radius: 10px;
+			overflow: hidden;
+			box-shadow: 0 8px 28px rgba(0,0,0,0.3);
 			cursor: crosshair;
 		}
-
-		.house-wrap svg {
-			filter: drop-shadow(0 8px 24px rgba(0,0,0,0.25));
-			max-width: min(520px, 94vw);
-			width: 520px;
-			height: auto;
+		.canvas-wrap canvas { display: block; width: 100%; height: auto; }
+		#paint, #overlay {
+			position: absolute;
+			top: 0; left: 0;
+			width: 100%; height: 100%;
 		}
+		#overlay { pointer-events: none; }
 
-		/* clickable parts highlight on hover */
-		.part {
-			transition: filter 0.1s;
+		.progress-wrap {
+			width: min(520px, 94vw);
+			background: rgba(255,255,255,0.4);
+			border-radius: 8px;
+			height: 14px;
+			overflow: hidden;
 		}
-		.part:hover {
-			filter: brightness(1.15);
-			cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ctext y='20' font-size='20'%3E🪣%3C/text%3E%3C/svg%3E") 0 20, pointer;
+		#progress-bar {
+			height: 100%;
+			background: linear-gradient(90deg, #f9a825, #f44336);
+			border-radius: 8px;
+			transition: width 0.3s;
+			width: 0%;
 		}
+		#progress-label { color: rgba(0,0,0,0.55); font-size: 0.82rem; }
 
-		/* ── completion banner ── */
 		#banner {
 			display: none;
 			position: fixed;
 			inset: 0;
-			background: rgba(0,0,0,0.55);
+			background: rgba(0,0,0,0.5);
 			z-index: 100;
 			align-items: center;
 			justify-content: center;
 		}
 		#banner.show { display: flex; }
-
 		.banner-box {
 			background: #fff;
 			border-radius: 20px;
@@ -130,15 +128,12 @@
 			box-shadow: 0 16px 48px rgba(0,0,0,0.4);
 			animation: pop 0.35s cubic-bezier(0.34,1.56,0.64,1);
 		}
-
 		@keyframes pop {
 			from { transform: scale(0.6); opacity: 0; }
 			to   { transform: scale(1);   opacity: 1; }
 		}
-
 		.banner-box h2 { font-size: 2rem; margin-bottom: 8px; }
 		.banner-box p  { color: #555; margin-bottom: 24px; }
-
 		.banner-box button {
 			padding: 12px 32px;
 			border: none;
@@ -151,29 +146,6 @@
 			transition: background 0.2s;
 		}
 		.banner-box button:hover { background: #2ea043; }
-
-		/* progress bar */
-		.progress-wrap {
-			width: min(520px, 94vw);
-			background: rgba(255,255,255,0.4);
-			border-radius: 8px;
-			height: 12px;
-			overflow: hidden;
-		}
-		#progress-bar {
-			height: 100%;
-			background: linear-gradient(90deg, #f9a825, #f44336);
-			border-radius: 8px;
-			transition: width 0.4s;
-			width: 0%;
-		}
-
-		.progress-label {
-			color: rgba(0,0,0,0.55);
-			font-size: 0.8rem;
-			align-self: flex-start;
-			margin-left: calc((100% - min(520px, 94vw)) / 2);
-		}
 	</style>
 </head>
 <body>
@@ -185,154 +157,376 @@
 
 <div class="game-area">
 
-	<!-- Palette -->
 	<div class="palette" id="palette">
 		<button class="color-btn active" data-color="#e53935" style="background:#e53935" title="Czerwona"></button>
 		<button class="color-btn"        data-color="#1e88e5" style="background:#1e88e5" title="Niebieska"></button>
-		<button class="color-btn"        data-color="#f5f5f5" style="background:#f5f5f5; border-color:#ccc" title="Biała"></button>
+		<button class="color-btn"        data-color="#f5f5f5" style="background:#f5f5f5;border-color:#ccc" title="Biała"></button>
 		<button class="color-btn"        data-color="#fb8c00" style="background:#fb8c00" title="Pomarańczowa"></button>
 		<button class="color-btn"        data-color="#212121" style="background:#212121" title="Czarna"></button>
 		<button class="color-btn"        data-color="#f48fb1" style="background:#f48fb1" title="Różowa"></button>
 	</div>
 
-	<!-- House SVG -->
-	<div class="house-wrap">
-		<svg id="house" viewBox="0 0 520 420" xmlns="http://www.w3.org/2000/svg">
+	<div id="house-label"></div>
 
-			<!-- sky / ground already in body bg, SVG bg transparent -->
-
-			<!-- chimney -->
-			<rect class="part" id="chimney"     x="350" y="60"  width="44" height="90" rx="4" fill="#b0bec5"/>
-			<rect id="chimney-top"               x="344" y="54"  width="56" height="14" rx="3" fill="#90a4ae"/>
-			<!-- smoke puffs (decorative, not paintable) -->
-			<circle id="smoke1" cx="372" cy="40" r="10" fill="rgba(200,200,200,0.6)"/>
-			<circle id="smoke2" cx="380" cy="26" r="7"  fill="rgba(200,200,200,0.4)"/>
-			<circle id="smoke3" cx="368" cy="14" r="5"  fill="rgba(200,200,200,0.25)"/>
-
-			<!-- roof -->
-			<polygon class="part" id="roof" points="40,190 260,60 480,190" fill="#c62828"/>
-			<!-- roof ridge decoration -->
-			<line x1="260" y1="60" x2="260" y2="80" stroke="rgba(0,0,0,0.12)" stroke-width="3"/>
-
-			<!-- main wall -->
-			<rect class="part" id="wall"        x="60"  y="185" width="400" height="200" rx="4" fill="#ffe082"/>
-
-			<!-- left window -->
-			<rect class="part" id="win-left"    x="90"  y="220" width="90"  height="80"  rx="5" fill="#90caf9"/>
-			<line x1="135" y1="220" x2="135" y2="300" stroke="rgba(0,0,0,0.15)" stroke-width="2"/>
-			<line x1="90"  y1="260" x2="180" y2="260" stroke="rgba(0,0,0,0.15)" stroke-width="2"/>
-			<!-- window frame -->
-			<rect x="90" y="220" width="90" height="80" rx="5" fill="none" stroke="#795548" stroke-width="4"/>
-
-			<!-- right window -->
-			<rect class="part" id="win-right"   x="340" y="220" width="90"  height="80"  rx="5" fill="#90caf9"/>
-			<line x1="385" y1="220" x2="385" y2="300" stroke="rgba(0,0,0,0.15)" stroke-width="2"/>
-			<line x1="340" y1="260" x2="430" y2="260" stroke="rgba(0,0,0,0.15)" stroke-width="2"/>
-			<rect x="340" y="220" width="90" height="80" rx="5" fill="none" stroke="#795548" stroke-width="4"/>
-
-			<!-- door -->
-			<rect class="part" id="door"        x="205" y="275" width="110" height="110" rx="6" fill="#8d6e63"/>
-			<!-- door arch top -->
-			<path class="part" id="door-arch"   d="M205,295 Q260,245 315,295" fill="#6d4c41" pointer-events="none"/>
-			<!-- door knob -->
-			<circle cx="300" cy="335" r="6" fill="#ffd54f"/>
-
-			<!-- foundation -->
-			<rect class="part" id="foundation"  x="50"  y="382" width="420" height="22" rx="4" fill="#a1887f"/>
-
-			<!-- fence left -->
-			<rect class="part" id="fence-left"  x="10"  y="340" width="50"  height="60"  rx="3" fill="#bcaaa4"/>
-			<rect x="10"  y="340" width="8"   height="60" rx="2" fill="rgba(0,0,0,0.08)"/>
-			<rect x="28"  y="340" width="8"   height="60" rx="2" fill="rgba(0,0,0,0.08)"/>
-			<rect x="46"  y="340" width="8"   height="60" rx="2" fill="rgba(0,0,0,0.08)"/>
-			<rect x="10"  y="348" width="50"  height="8"  rx="2" fill="rgba(0,0,0,0.12)"/>
-			<rect x="10"  y="368" width="50"  height="8"  rx="2" fill="rgba(0,0,0,0.12)"/>
-
-			<!-- fence right -->
-			<rect class="part" id="fence-right" x="460" y="340" width="50"  height="60"  rx="3" fill="#bcaaa4"/>
-			<rect x="460" y="340" width="8"  height="60" rx="2" fill="rgba(0,0,0,0.08)"/>
-			<rect x="478" y="340" width="8"  height="60" rx="2" fill="rgba(0,0,0,0.08)"/>
-			<rect x="496" y="340" width="8"  height="60" rx="2" fill="rgba(0,0,0,0.08)"/>
-			<rect x="460" y="348" width="50" height="8"  rx="2" fill="rgba(0,0,0,0.12)"/>
-			<rect x="460" y="368" width="50" height="8"  rx="2" fill="rgba(0,0,0,0.12)"/>
-
-		</svg>
+	<div class="canvas-wrap">
+		<canvas id="bg"      width="520" height="420"></canvas>
+		<canvas id="paint"   width="520" height="420"></canvas>
+		<canvas id="overlay" width="520" height="420"></canvas>
 	</div>
 
-	<!-- Progress -->
-	<span class="progress-label" id="progress-label">Pomalowano: 0 / 8 elementów</span>
+	<div id="progress-label">Pomalowano: 0%</div>
 	<div class="progress-wrap">
 		<div id="progress-bar"></div>
 	</div>
-
 </div>
 
-<!-- Completion banner -->
 <div id="banner">
 	<div class="banner-box">
 		<h2>🎉 Brawo!</h2>
-		<p>Dom jest w pełni pomalowany!</p>
-		<button id="restart-btn">Zacznij od nowa</button>
+		<p id="banner-text">Dom jest pomalowany!</p>
+		<button id="restart-btn">Następny dom →</button>
 	</div>
 </div>
 
 <script>
-	const PARTS = ['chimney','roof','wall','win-left','win-right','door','fence-left','fence-right'];
-	const TOTAL = PARTS.length;
+const W = 520, H = 420, CELL = 20;
+const COLS = W / CELL, ROWS = H / CELL; // 26 × 21
 
-	let selectedColor = '#e53935';
-	const painted = new Set();
+// ── Canvas setup ─────────────────────────────────────────────
+const bgCtx      = document.getElementById('bg').getContext('2d');
+const paintCtx   = document.getElementById('paint').getContext('2d');
+const overlayCtx = document.getElementById('overlay').getContext('2d');
+const paintCanvas = document.getElementById('paint');
 
-	// Palette selection
-	document.getElementById('palette').addEventListener('click', e => {
-		const btn = e.target.closest('.color-btn');
-		if (!btn) return;
-		document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('active'));
-		btn.classList.add('active');
-		selectedColor = btn.dataset.color;
+// ── Drawing helpers ──────────────────────────────────────────
+function stroke(ctx, lw, color) { ctx.lineWidth = lw; ctx.strokeStyle = color; }
+
+function smoke(ctx, x, y) {
+	[[x,y,10,0.55],[x+9,y-14,7,0.38],[x-3,y-26,5,0.22]].forEach(([cx,cy,r,a]) => {
+		ctx.fillStyle = `rgba(200,200,200,${a})`;
+		ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI*2); ctx.fill();
 	});
+}
 
-	// Paint on click
-	document.getElementById('house').addEventListener('click', e => {
-		const part = e.target.closest('.part');
-		if (!part) return;
+function knob(ctx, x, y) {
+	ctx.fillStyle = '#ffd54f';
+	ctx.beginPath(); ctx.arc(x, y, 6, 0, Math.PI*2); ctx.fill();
+	ctx.strokeStyle = '#f9a825'; ctx.lineWidth = 1.5; ctx.stroke();
+}
 
-		part.setAttribute('fill', selectedColor);
+function winCross(ctx, rx, ry, rw, rh) {
+	ctx.strokeStyle = 'rgba(0,0,0,0.22)'; ctx.lineWidth = 1.5;
+	ctx.beginPath(); ctx.moveTo(rx+rw/2, ry); ctx.lineTo(rx+rw/2, ry+rh); ctx.stroke();
+	ctx.beginPath(); ctx.moveTo(rx, ry+rh/2); ctx.lineTo(rx+rw, ry+rh/2); ctx.stroke();
+}
 
-		painted.add(part.id);
-		updateProgress();
-	});
+function chimneyTop(ctx, x, y, w, fill) {
+	ctx.fillStyle = fill;
+	ctx.fillRect(x - 6, y - 6, w + 12, 14);
+	stroke(ctx, 2.5, '#5d4037'); ctx.strokeRect(x - 6, y - 6, w + 12, 14);
+}
 
-	function updateProgress() {
-		const count = painted.size;
-		document.getElementById('progress-label').textContent = `Pomalowano: ${count} / ${TOTAL} elementów`;
-		document.getElementById('progress-bar').style.width = `${(count / TOTAL) * 100}%`;
+function outlineRect(ctx, x, y, w, h) {
+	stroke(ctx, 3, '#5d4037'); ctx.strokeRect(x, y, w, h);
+}
 
-		if (count >= TOTAL) {
-			setTimeout(() => document.getElementById('banner').classList.add('show'), 400);
+function outlineTri(ctx, x1, y1, x2, y2, x3, y3) {
+	stroke(ctx, 3, '#5d4037');
+	ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(x2,y2); ctx.lineTo(x3,y3); ctx.closePath(); ctx.stroke();
+}
+
+// ── Region hit-test ──────────────────────────────────────────
+function inRect(x, y, rx, ry, rw, rh) {
+	return x >= rx && x < rx+rw && y >= ry && y < ry+rh;
+}
+function inTri(px, py, ax, ay, bx, by, cx, cy) {
+	const s = (p1x,p1y,p2x,p2y,p3x,p3y) => (p1x-p3x)*(p2y-p3y)-(p2x-p3x)*(p1y-p3y);
+	const d1=s(px,py,ax,ay,bx,by), d2=s(px,py,bx,by,cx,cy), d3=s(px,py,cx,cy,ax,ay);
+	return !((d1<0||d2<0||d3<0)&&(d1>0||d2>0||d3>0));
+}
+function testRegion(r, cx, cy) {
+	if (r.shape === 'rect') return inRect(cx, cy, ...r.c);
+	if (r.shape === 'tri')  return inTri(cx, cy, ...r.c);
+	return false;
+}
+
+// ── House definitions ────────────────────────────────────────
+//  regions: checked in order (specific/small first, then general)
+//  noOutline: skip auto-outline for this region
+//  drawBg / drawOverlay: optional per-house extras drawn by drawBg/drawOverlay
+
+const HOUSES = [
+
+	// ── 1: Dom klasyczny ─────────────────────────────────────
+	{
+		label: 'Dom klasyczny',
+		regions: [
+			{ id:'chimney',    fill:'#b0bec5', shape:'rect', c:[350,60,44,90]           },
+			{ id:'win1',       fill:'#90caf9', shape:'rect', c:[90,220,90,80]            },
+			{ id:'win2',       fill:'#90caf9', shape:'rect', c:[340,220,90,80]           },
+			{ id:'door',       fill:'#8d6e63', shape:'rect', c:[205,275,110,110]         },
+			{ id:'roof',       fill:'#c62828', shape:'tri',  c:[40,190,260,60,480,190]  },
+			{ id:'wall',       fill:'#ffe082', shape:'rect', c:[60,185,400,200]          },
+			{ id:'foundation', fill:'#a1887f', shape:'rect', c:[50,382,420,22]          },
+			{ id:'fence1',     fill:'#bcaaa4', shape:'rect', c:[10,340,50,60]           },
+			{ id:'fence2',     fill:'#bcaaa4', shape:'rect', c:[460,340,50,60]          },
+		],
+		extraBg(ctx) {},
+		extraOverlay(ctx) {
+			// chimney cap + smoke
+			chimneyTop(ctx, 350, 60, 44, '#90a4ae');
+			smoke(ctx, 372, 36);
+			// door knob
+			knob(ctx, 300, 335);
+			// window crosses
+			winCross(ctx, 90, 220, 90, 80);
+			winCross(ctx, 340, 220, 90, 80);
+			// fence rails
+			[10, 460].forEach(fx => {
+				stroke(ctx, 1.5, 'rgba(0,0,0,0.3)');
+				[358, 376, 394].forEach(fy => {
+					ctx.beginPath(); ctx.moveTo(fx, fy); ctx.lineTo(fx+50, fy); ctx.stroke();
+				});
+			});
+		}
+	},
+
+	// ── 2: Domek wiejski ─────────────────────────────────────
+	{
+		label: 'Domek wiejski',
+		regions: [
+			{ id:'chimney',    fill:'#90a4ae', shape:'rect', c:[82,98,40,112]            },
+			{ id:'win1',       fill:'#a5d6a7', shape:'rect', c:[65,225,80,70]            },
+			{ id:'win2',       fill:'#a5d6a7', shape:'rect', c:[222,225,80,70]           },
+			{ id:'win3',       fill:'#a5d6a7', shape:'rect', c:[379,225,80,70]           },
+			{ id:'door',       fill:'#6d4c41', shape:'rect', c:[287,295,96,95]           },
+			{ id:'roof',       fill:'#4e342e', shape:'tri',  c:[20,205,260,90,500,205]  },
+			{ id:'wall',       fill:'#fff9c4', shape:'rect', c:[40,200,440,185]          },
+			{ id:'foundation', fill:'#8d6e63', shape:'rect', c:[28,380,464,18]          },
+		],
+		extraBg(ctx) {
+			// flower boxes under windows (bg layer, painted over by user)
+			ctx.fillStyle = '#d32f2f';
+			[[65,293],[222,293],[379,293]].forEach(([x,y]) => ctx.fillRect(x, y+2, 80, 8));
+		},
+		extraOverlay(ctx) {
+			chimneyTop(ctx, 82, 98, 40, '#78909c');
+			smoke(ctx, 102, 76);
+			knob(ctx, 368, 345);
+			winCross(ctx, 65, 225, 80, 70);
+			winCross(ctx, 222, 225, 80, 70);
+			winCross(ctx, 379, 225, 80, 70);
+			// flower box frames
+			stroke(ctx, 2, '#795548');
+			[[65,293],[222,293],[379,293]].forEach(([x,y]) => {
+				ctx.strokeRect(x, y, 80, 12);
+				// flower dots
+				for (let i = 0; i < 5; i++) {
+					ctx.fillStyle = ['#e53935','#fb8c00','#fdd835','#66bb6a','#42a5f5'][i];
+					ctx.beginPath(); ctx.arc(x + 9 + i*15, y + 6, 4, 0, Math.PI*2); ctx.fill();
+				}
+			});
+		}
+	},
+
+	// ── 3: Kamienica ─────────────────────────────────────────
+	{
+		label: 'Kamienica',
+		regions: [
+			{ id:'chimney',   fill:'#90a4ae', shape:'rect', c:[370,52,40,78],   noOutline:true },
+			{ id:'win-t1',    fill:'#b3e5fc', shape:'rect', c:[100,130,70,65]                   },
+			{ id:'win-t2',    fill:'#b3e5fc', shape:'rect', c:[310,130,70,65]                   },
+			{ id:'win-b1',    fill:'#b3e5fc', shape:'rect', c:[100,240,70,65]                   },
+			{ id:'win-b2',    fill:'#b3e5fc', shape:'rect', c:[310,240,70,65]                   },
+			{ id:'door',      fill:'#4a148c', shape:'rect', c:[215,285,90,100]                  },
+			{ id:'roof',      fill:'#1a237e', shape:'tri',  c:[40,118,260,45,480,118]           },
+			{ id:'wall-u',    fill:'#e8eaf6', shape:'rect', c:[80,113,360,110],  noOutline:true },
+			{ id:'wall-l',    fill:'#e8eaf6', shape:'rect', c:[80,218,360,167],  noOutline:true },
+			{ id:'foundation',fill:'#9e9e9e', shape:'rect', c:[60,380,400,20]                   },
+		],
+		extraBg(ctx) {},
+		extraOverlay(ctx) {
+			// combined wall outline
+			outlineRect(ctx, 80, 113, 360, 272);
+			// chimney outline + cap
+			outlineRect(ctx, 370, 52, 40, 78);
+			chimneyTop(ctx, 370, 52, 40, '#78909c');
+			smoke(ctx, 390, 30);
+			// floor divider
+			stroke(ctx, 2.5, '#9e9e9e');
+			ctx.beginPath(); ctx.moveTo(80, 220); ctx.lineTo(440, 220); ctx.stroke();
+			// door knob
+			knob(ctx, 295, 340);
+			// arched door top
+			stroke(ctx, 2.5, '#5d4037');
+			ctx.beginPath(); ctx.arc(260, 285, 45, Math.PI, 0); ctx.stroke();
+			// window crosses (4 windows)
+			[[100,130],[310,130],[100,240],[310,240]].forEach(([x,y]) => winCross(ctx, x, y, 70, 65));
+		}
+	},
+
+];
+
+// ── Cell precomputation ───────────────────────────────────────
+let cellRegion = [];
+let regionTotal = {};
+let totalHouseCells = 0;
+
+function precomputeCells(house) {
+	cellRegion = Array.from({length: ROWS}, () => new Array(COLS).fill(null));
+	regionTotal = {};
+	house.regions.forEach(r => regionTotal[r.id] = 0);
+
+	for (let row = 0; row < ROWS; row++) {
+		for (let col = 0; col < COLS; col++) {
+			const cx = col * CELL + CELL / 2;
+			const cy = row * CELL + CELL / 2;
+			for (const region of house.regions) {
+				if (testRegion(region, cx, cy)) {
+					cellRegion[row][col] = region.id;
+					regionTotal[region.id]++;
+					break;
+				}
+			}
 		}
 	}
+	totalHouseCells = Object.values(regionTotal).reduce((a,b) => a+b, 0);
+}
 
-	// Restart
-	document.getElementById('restart-btn').addEventListener('click', () => {
-		// Reset fills to defaults
-		const defaults = {
-			'chimney':     '#b0bec5',
-			'roof':        '#c62828',
-			'wall':        '#ffe082',
-			'win-left':    '#90caf9',
-			'win-right':   '#90caf9',
-			'door':        '#8d6e63',
-			'fence-left':  '#bcaaa4',
-			'fence-right': '#bcaaa4',
-		};
-		PARTS.forEach(id => {
-			document.getElementById(id).setAttribute('fill', defaults[id]);
-		});
-		painted.clear();
-		updateProgress();
-		document.getElementById('banner').classList.remove('show');
+// ── Background draw ───────────────────────────────────────────
+function drawBg(house) {
+	// Sky
+	const sky = bgCtx.createLinearGradient(0, 0, 0, H);
+	sky.addColorStop(0, '#87ceeb'); sky.addColorStop(1, '#b0e0ff');
+	bgCtx.fillStyle = sky; bgCtx.fillRect(0, 0, W, H);
+	// Ground
+	bgCtx.fillStyle = '#90ee90'; bgCtx.fillRect(0, 0.6*H, W, 0.4*H);
+
+	// Draw region fills in reverse order (general before specific)
+	[...house.regions].reverse().forEach(r => {
+		bgCtx.fillStyle = r.fill;
+		if (r.shape === 'rect') { bgCtx.fillRect(...r.c); }
+		else if (r.shape === 'tri') {
+			const [x1,y1,x2,y2,x3,y3] = r.c;
+			bgCtx.beginPath(); bgCtx.moveTo(x1,y1); bgCtx.lineTo(x2,y2); bgCtx.lineTo(x3,y3);
+			bgCtx.closePath(); bgCtx.fill();
+		}
 	});
+
+	house.extraBg(bgCtx);
+}
+
+// ── Overlay draw ──────────────────────────────────────────────
+function drawOverlay(house) {
+	overlayCtx.clearRect(0, 0, W, H);
+
+	// Auto-outline each region (unless noOutline)
+	house.regions.forEach(r => {
+		if (r.noOutline) return;
+		stroke(overlayCtx, 3, '#5d4037');
+		if (r.shape === 'rect') { overlayCtx.strokeRect(...r.c); }
+		else if (r.shape === 'tri') {
+			const [x1,y1,x2,y2,x3,y3] = r.c;
+			overlayCtx.beginPath();
+			overlayCtx.moveTo(x1,y1); overlayCtx.lineTo(x2,y2); overlayCtx.lineTo(x3,y3);
+			overlayCtx.closePath(); overlayCtx.stroke();
+		}
+	});
+
+	house.extraOverlay(overlayCtx);
+}
+
+// ── Paint state ───────────────────────────────────────────────
+let cellColor = [];
+let paintedCount = 0;
+let wonAlready = false;
+let selectedColor = '#e53935';
+let isDown = false;
+
+function resetPaint() {
+	paintCtx.clearRect(0, 0, W, H);
+	cellColor = Array.from({length: ROWS}, () => new Array(COLS).fill(null));
+	paintedCount = 0;
+	wonAlready = false;
+}
+
+function paintCell(col, row) {
+	if (col < 0 || col >= COLS || row < 0 || row >= ROWS) return;
+	if (cellColor[row][col] === selectedColor) return;
+	const wasEmpty = cellColor[row][col] === null;
+	const rid = cellRegion[row][col];
+	cellColor[row][col] = selectedColor;
+	if (wasEmpty && rid !== null) paintedCount++;
+	paintCtx.fillStyle = selectedColor;
+	paintCtx.fillRect(col * CELL, row * CELL, CELL, CELL);
+	updateProgress();
+}
+
+function getCell(e) {
+	const rect = paintCanvas.getBoundingClientRect();
+	const sx = W / rect.width, sy = H / rect.height;
+	const cx = e.touches ? e.touches[0].clientX : e.clientX;
+	const cy = e.touches ? e.touches[0].clientY : e.clientY;
+	return {
+		col: Math.floor((cx - rect.left) * sx / CELL),
+		row: Math.floor((cy - rect.top)  * sy / CELL),
+	};
+}
+
+paintCanvas.addEventListener('mousedown',  e => { e.preventDefault(); isDown=true; const c=getCell(e); paintCell(c.col,c.row); });
+paintCanvas.addEventListener('mousemove',  e => { if(!isDown) return; const c=getCell(e); paintCell(c.col,c.row); });
+window.addEventListener('mouseup',         () => { isDown=false; });
+paintCanvas.addEventListener('touchstart', e => { e.preventDefault(); isDown=true; const c=getCell(e); paintCell(c.col,c.row); }, {passive:false});
+paintCanvas.addEventListener('touchmove',  e => { e.preventDefault(); const c=getCell(e); paintCell(c.col,c.row); }, {passive:false});
+window.addEventListener('touchend',        () => { isDown=false; });
+
+// ── Palette ───────────────────────────────────────────────────
+document.getElementById('palette').addEventListener('click', e => {
+	const btn = e.target.closest('.color-btn');
+	if (!btn) return;
+	document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('active'));
+	btn.classList.add('active');
+	selectedColor = btn.dataset.color;
+});
+
+// ── Progress ──────────────────────────────────────────────────
+function updateProgress() {
+	const pct = totalHouseCells > 0 ? paintedCount / totalHouseCells : 0;
+	const display = Math.min(100, Math.round(pct * 100));
+	document.getElementById('progress-label').textContent = `Pomalowano: ${display}%`;
+	document.getElementById('progress-bar').style.width = `${display}%`;
+	if (!wonAlready && pct >= 0.75) {
+		wonAlready = true;
+		setTimeout(() => document.getElementById('banner').classList.add('show'), 400);
+	}
+}
+
+// ── House loading ─────────────────────────────────────────────
+let houseIdx = 0;
+
+function loadHouse(idx) {
+	houseIdx = ((idx % HOUSES.length) + HOUSES.length) % HOUSES.length;
+	const house = HOUSES[houseIdx];
+	precomputeCells(house);
+	resetPaint();
+	drawBg(house);
+	drawOverlay(house);
+	updateProgress();
+	document.getElementById('house-label').textContent =
+		`${house.label}  •  ${houseIdx + 1} / ${HOUSES.length}`;
+	document.getElementById('banner-text').textContent =
+		houseIdx + 1 < HOUSES.length ? 'Dom pomalowany! Czas na kolejny.' : 'Wszystkie domy pomalowane!';
+	const btn = document.getElementById('restart-btn');
+	btn.textContent = houseIdx + 1 < HOUSES.length ? 'Następny dom →' : 'Zacznij od nowa';
+}
+
+document.getElementById('restart-btn').addEventListener('click', () => {
+	document.getElementById('banner').classList.remove('show');
+	loadHouse(houseIdx + 1);
+});
+
+// ── Start ─────────────────────────────────────────────────────
+loadHouse(0);
 </script>
 </body>
 </html>
